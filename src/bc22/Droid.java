@@ -5,6 +5,7 @@ import java.util.Random;
 
 public strictfp class Droid {
     RobotController rc;
+    MapLocation loc;
     static final Random rng = new Random(6147);
     static final Direction[] directions = {
             Direction.NORTH,
@@ -19,7 +20,12 @@ public strictfp class Droid {
 
     public Droid(RobotController rc) {
         this.rc = rc;
+        this.loc = new MapLocation(0,0);
     }
 
     public static void run(RobotController rc) throws GameActionException {};
+
+    public void updateLoc() {
+        this.loc = this.rc.getLocation();
+    }
 }
