@@ -2,10 +2,16 @@ package bc22;
 
 import battlecode.common.*;
 
-public strictfp class Miner extends Droid {
-    public Miner(RobotController rc) { super(rc); }
+public strictfp class MinerStrategy {
+    static Direction exploreDir = null;
 
-     public static void run(RobotController rc) throws GameActionException {
+     static void run(RobotController rc) throws GameActionException {
+        if (exploreDir == null) {
+            RobotPlayer.rng.setSeed(rc.getID());
+            exploreDir = RobotPlayer.directions[RobotPlayer.rng.nextInt(RobotPlayer.directions.length)];
+        }
+        rc.setIndicatorString(exploreDir.toString());
+
         MapLocation me = rc.getLocation();
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
@@ -23,13 +29,13 @@ public strictfp class Miner extends Droid {
         MapLocation[] nearbyLocs = rc.getAllLocationsWithinRadiusSquared(me, visionRadius);
 
         MapLocation target = null;
-        int distanceToTarget = Integer.MAX_VALUE;
+        int distToTarget = Integer.MAX_VALUE;
         for (MapLocation loc : nearbyLocs) {
             if (rc.senseLead(loc) > 0 || rc.senseGold(loc) > 0) {
                 int distance = me.distanceSquaredTo(loc);
-                if (distance < distanceToTarget) {
+                if (distance < distToTarget) {
                     target = loc;
-                    distanceToTarget = distance;
+                    distToTarget = distance;
                 }
             }
         }
@@ -38,9 +44,16 @@ public strictfp class Miner extends Droid {
             if (rc.canMove(toMove)) {
                 rc.move(toMove);
             }
+        } else {
+            if (rc.canMove(exploreDir)) {
+                rc.move(exploreDir);
+            } else if (!rc.onTheMap(rc.getLocation().add(exploreDir))) {
+                exploreDir = exploreDir.opposite();
+            }
         }
 
-        Direction dir = directions[rng.nextInt(directions.length)];
+        int directionIdx = RobotPlayer.rng.nextInt(RobotPlayer.directions.length);
+        Direction dir = RobotPlayer.directions[directionIdx];
         if (rc.canMove(dir)) {
             rc.move(dir);
         }

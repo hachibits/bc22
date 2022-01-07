@@ -1,10 +1,22 @@
 package bc22;
 
 import battlecode.common.*;
+import java.util.Random;
 
 public strictfp class RobotPlayer {
 
     static int turnCount = 0;
+    static final Random rng = new Random(6147);
+    static final Direction[] directions = {
+            Direction.NORTH,
+            Direction.NORTHEAST,
+            Direction.EAST,
+            Direction.SOUTHEAST,
+            Direction.SOUTH,
+            Direction.SOUTHWEST,
+            Direction.WEST,
+            Direction.NORTHWEST,
+    };
 
     @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
@@ -14,12 +26,12 @@ public strictfp class RobotPlayer {
 
             try {
                 switch (rc.getType()) {
-                    case ARCHON:     Archon.run(rc);  break;
-                    case MINER:      Miner.run(rc);   break;
-                    case SOLDIER:    Soldier.run(rc); break;
-                    case LABORATORY:
-                    case WATCHTOWER:
-                    case BUILDER:
+                    case ARCHON:     ArchonStrategy.run(rc);  break;
+                    case MINER:      MinerStrategy.run(rc);   break;
+                    case SOLDIER:    SoldierStrategy.run(rc); break;
+                    case LABORATORY: //LaboratoryStrategy.run(rc);
+                    case WATCHTOWER: //WatchTowerStrategy.run(rc);
+                    case BUILDER: //BuilderStrategy.run(rc);
                     case SAGE:       break;
                 }
             } catch (GameActionException e) {

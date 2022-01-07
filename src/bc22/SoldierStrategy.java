@@ -2,9 +2,8 @@ package bc22;
 
 import battlecode.common.*;
 
-public strictfp class Soldier extends Droid {
-    public Soldier(RobotController rc) { super(rc); }
-    public static void run(RobotController rc) throws GameActionException {
+public strictfp class SoldierStrategy {
+    static void run(RobotController rc) throws GameActionException {
         int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);
@@ -15,7 +14,8 @@ public strictfp class Soldier extends Droid {
             }
         }
 
-        Direction dir = directions[rng.nextInt(directions.length)];
+        int directionIdx = RobotPlayer.rng.nextInt(RobotPlayer.directions.length);
+        Direction dir = RobotPlayer.directions[directionIdx];
         if (rc.canMove(dir)) {
             rc.move(dir);
         }
