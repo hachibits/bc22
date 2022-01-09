@@ -39,7 +39,10 @@ public strictfp class BuilderStrategy {
         if (rc.canMove(dir)) {
             rc.move(dir);
         }
-        if(rc.getTeamLeadAmount(rc.getTeam()) > 7000 && turn % 100 == 0 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
+
+        if (rc.getTeamLeadAmount(rc.getTeam()) > 7000 && turn % 150 == 0 && rc.canBuildRobot(RobotType.LABORATORY, dir))  {
+            rc.buildRobot(RobotType.LABORATORY, dir);
+        } else if(rc.getTeamLeadAmount(rc.getTeam()) > 7000 && turn % 100 == 0 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
             rc.buildRobot(RobotType.WATCHTOWER, dir);
         }
     }
