@@ -30,8 +30,8 @@ public strictfp class RobotPlayer {
                     case MINER:      MinerStrategy.run(rc);   break;
                     case SOLDIER:    SoldierStrategy.run(rc); break;
                     case LABORATORY: //LaboratoryStrategy.run(rc);
-                    case WATCHTOWER: //WatchTowerStrategy.run(rc);
-                    case BUILDER: //BuilderStrategy.run(rc);
+                    case WATCHTOWER: WatchTowerStrategy.run(rc);
+                    case BUILDER: BuilderStrategy.run(rc);
                     case SAGE:       break;
                 }
             } catch (GameActionException e) {
