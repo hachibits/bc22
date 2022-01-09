@@ -40,10 +40,7 @@ public strictfp class MinerStrategy {
             }
         }
         if (target != null) {
-            Direction toMove = me.directionTo(target);
-            if (rc.canMove(toMove)) {
-                rc.move(toMove);
-            }
+            Pathing.walkTowards(rc, target);
         } else {
             if (rc.canMove(exploreDir)) {
                 rc.move(exploreDir);
