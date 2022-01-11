@@ -1,11 +1,16 @@
 package bc22;
 import battlecode.common.*;
+
+import java.awt.*;
 import java.util.Arrays;
 
 public strictfp class ArchonStrategy {
     static int miners = 0, soldiers = 0, builders = 0;
 
     static void run(RobotController rc) throws GameActionException {
+        miners = Communication.getAlive(rc, RobotType.MINER);
+        soldiers = Communication.getAlive(rc, RobotType.SOLDIER);
+        builders = Communication.getAlive(rc, RobotType.BUILDER);
         if (miners < 5) {
             buildTowardsLowRubble(rc, RobotType.MINER);
         } else if (soldiers < 10) {
