@@ -12,6 +12,11 @@ public strictfp class SoldierStrategy {
             if (rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
             }
+        } else {
+            Direction dir = rc.getLocation().directionTo(Communication.getClosestEnemy(rc));
+            if (dir != null && rc.canMove(dir)) {
+                rc.move(dir);
+            }
         }
 
         int directionIdx = RobotPlayer.rng.nextInt(RobotPlayer.directions.length);
